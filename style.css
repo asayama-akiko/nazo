@@ -1,0 +1,359 @@
+:root {
+  --main-yellow: #f4f910;
+  --main-gray: #f3f3f3;
+  --dark-gray: #333;
+  --white: #fff;
+  --radius: 15px;
+}
+
+html {
+  font-size: 62.5%; /* 10px */
+}
+
+body {
+  width: 100%;
+  font-family: "Roboto + Mono", "Noto Sans JP", sans-serif;
+  color: var(--dark-gray);
+  background: var(--white);
+  font-weight: 400; /* レギュラーウェイトを指定 */
+  font-size: 1.4rem; /* <p>に合わせて14px */
+  line-height: 1;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+/* ===== ヘッダー ===== */
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 30px;
+  background: var(--white);
+  position: fixed;
+  z-index: 10;
+}
+
+header .logo img {
+  width: 80%;
+}
+
+header nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+header a {
+  text-decoration: none;
+  color: var(--dark-gray);
+  padding: 10px 0;
+  position: relative;
+}
+
+header a::after {
+  content: "";
+  position: absolute;
+  background: var(--main-yellow);
+  height: 2px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  transform-origin: center;
+  /* ホバー前の状態: 横幅を0%に縮小して隠す */
+  transform: scaleX(0);
+  /* アニメーションの設定 (0.3秒で「シュッ」と変化) */
+  transition: transform 0.3s ease-out;
+}
+
+header a:hover::after {
+  /* ホバー時: 横幅を100%に戻す */
+  transform: scaleX(1);
+}
+
+/* ===== ヒーロー ===== */
+.hero {
+  position: relative;
+  height: 600px;
+  background: #bfbfbf;
+  overflow: hidden;
+  /* (補足) 中のテキストを中央寄せにする場合 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero svg {
+  display: block;
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  right: 16%;
+  width: 100%;
+  z-index: 1;
+}
+
+.draw {
+  fill: none;
+  stroke: #ffffff; /* 線色 */
+  stroke-width: 2; /* 太さ */
+  stroke-linecap: round; /* 先端丸め */
+  stroke-dasharray: 1; /* 全長=1（pathLength参照） */
+  stroke-dashoffset: 1; /* 全部隠す */
+  animation: draw 4s ease-in-out forwards;
+  /* ほんのり発光したい場合（任意） */
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.35));
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  } /* 1 → 0 で全体が現れる */
+}
+
+/* 動きを弱めたい環境向け（任意） */
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    animation-duration: 8s;
+  }
+}
+
+.hero-content {
+  position: absolute;
+  z-index: 2;
+  top: 70%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-family: "komadori mini";
+  font-size: 5rem;
+  letter-spacing: -0.5rem;
+  margin-bottom: 4px;
+}
+.hero .btn-yellow {
+  display: block;
+  background: var(--main-yellow);
+  padding: 12px 60px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--dark-gray);
+  margin-top: 150px;
+  box-shadow: 0 4px 0 rgba(51, 51, 51, 1); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: none; /* 影をつけるときは枠線を消すときれいです */
+  cursor: pointer;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* (↓推奨) 押したときの立体感を出すための設定 */
+}
+
+.hero .btn-yellow:active {
+  /* ボタン自体を影の分だけ下に動かす (4px分) */
+  transform: translateY(4px);
+  /* 影を消すことで、「ボタンが沈んだ」ように見せます */
+  box-shadow: 0 0 0 rgba(51, 51, 51, 0);
+}
+
+.hero .plane {
+  display: block;
+  position: absolute;
+  top: 58%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes flyIn {
+  0% {
+    opacity: 0; /* 透明で表示 */
+    transform: translate(-30px, 20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+.hero #paper-plane {
+  animation: flyIn 1.5s cubic-bezier(0.23, 1, 0.32, 1) 4s both;
+}
+
+/* ===== セクション共通 ===== */
+section {
+  padding: 80px 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 1.8rem;
+}
+
+/* ===== プラン ===== */
+.plan-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.plan {
+  background: var(--main-gray);
+  border-radius: var(--radius);
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+  padding: 30px;
+}
+.plan.recommended {
+  background: var(--main-yellow);
+  font-weight: bold;
+}
+.plan .price {
+  font-size: 1.2rem;
+}
+.plan .price span {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* ===== 利用者の声 ===== */
+.voice-box {
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+}
+.voice-box.yellow {
+  background: var(--main-yellow);
+}
+.voice-box.gray {
+  background: var(--main-gray);
+}
+.voice-box span {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+/* ===== 流れ ===== */
+.flow-steps {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.step {
+  text-align: center;
+}
+.step span {
+  display: inline-block;
+  background: var(--main-yellow);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.btn-dark {
+  display: block;
+  background: var(--dark-gray);
+  color: var(--white);
+  text-align: center;
+  padding: 12px 30px;
+  border-radius: var(--radius);
+  width: fit-content;
+  margin: 40px auto 0;
+  text-decoration: none;
+}
+
+/* ===== FAQ ===== */
+.faq ul {
+  list-style: none;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  padding: 0;
+}
+.faq li {
+  background: var(--main-gray);
+  padding: 15px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+}
+
+/* ===== フォーム ===== */
+.form {
+  background: var(--dark-gray);
+  color: var(--white);
+  padding: 80px 20px;
+}
+.form form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.plan-select {
+  display: flex;
+  justify-content: space-between;
+}
+.plan-select label {
+  background: var(--white);
+  color: var(--dark-gray);
+  padding: 10px 15px;
+  border-radius: var(--radius);
+}
+input,
+textarea {
+  padding: 10px;
+  border-radius: var(--radius);
+  border: none;
+  width: 100%;
+}
+textarea {
+  height: 100px;
+}
+/* .btn-yellow {
+  background: var(--main-yellow);
+  border: none;
+  color: var(--dark-gray);
+  padding: 12px 80px;
+  border-radius: var(--radius);
+  cursor: pointer;
+} */
+
+/* ===== フッター ===== */
+.footer {
+  background: #222;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .plan-cards {
+    flex-direction: column;
+  }
+  .flow-steps {
+    flex-direction: column;
+  }
+  .plan-select {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
