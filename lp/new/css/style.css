@@ -87,7 +87,7 @@ header a:hover::after {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  background-image: url('../img/mv.jpg');
+  background-image: url('img/mv.jpg');
   opacity: 0.95;
   /* (補足) 中のテキストを中央寄せにする場合 */
   display: flex;
@@ -608,7 +608,7 @@ details[open] p {
 }
 /* ===== フォーム ===== */
 .form {
-  background-image: url(/img/mv.jpg);
+  background-image: url('img/mv.jpg');
   opacity: 0.85;
   color: var(--white);
   /* padding: 80px 20px; */
