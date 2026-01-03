@@ -506,88 +506,31 @@ h2 img {
 }
 /* ===== ご利用の流れ ===== */
 .flow {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+  max-width: 1280px;
 }
-.y-bubble {
-  width: 100%;
-  height: 1532px;
+.flow-container {
+  max-width: 1163px;
+  height: 1512px;
   padding: 100px 0;
   background: var(--main-yellow);
-  border-radius: 299px 232px 0 476px;
+  border-radius: 299px 232px 0 450px;
   transform: translateX(117px);
 }
 .flow-wrapper {
   width: 100%;
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+  transform: translateX(-63px);
 }
-/* .flow-contents {
-  width: 100%;
-  position: relative;
-} */
-/* .flow-frame {
-  margin-top: 20px;
+.img-flow {
+  width: 1154px;
 }
-.step {
-  display: flex;
-  justify-content: space-between;
-  gap: 32px 54px;
-  text-align: justify;
-}
-.step_01 {
-  position: absolute;
-  top: 118px;
-  left: 209px;
-}
-.step_02 {
-  position: absolute;
-  top: 272px;
-  left: 705px;
-}
-.step_03 {
-  position: absolute;
-  top: 635px;
-  left: 431px;
-}
-.step-number {
-  font-size: 3.6rem;
-  position: relative;
+.img-steps {
+  display: none;
 }
 
-.step-number::after {
-  content: "";
-  background: var(--white);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  position: absolute;
-  top: 14px;
-  left: 3px;
-  z-index: -1;
-}
-
-.step-content {
-  margin-top: 73px;
-}
-.step-title {
-  display: block;
-  font-size: 2.4rem;
-  font-weight: 700;
-  text-align: center;
-}
-
-.step-txt {
-  display: block;
-  max-width: 210px;
-  line-height: 2;
-  margin: 16px auto 0;
-} */
 /* ===== FAQ ===== */
+.faq {
+  max-width: 1280px;
+}
 .faq-contents {
   display: flex;
   flex-direction: column;
@@ -650,6 +593,7 @@ details[open] p {
 }
 /* ===== フォーム ===== */
 .form {
+  max-width: 1280px;
   position: relative;
   color: var(--white);
   margin-bottom: 0;
@@ -668,7 +612,7 @@ details[open] p {
   z-index: -1;
 }
 
-.form h2 {
+.form .has-line {
   margin-top: 100px;
 }
 .form form {
@@ -751,9 +695,7 @@ label.label-yellow {
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="tel"],
-.form-group input[type="text"][placeholder="〒"],
-.form-group textarea,
-.form-group #address {
+.form-group textarea {
   flex-grow: 1; /* 残りのスペースいっぱいに広がる */
   padding: 10px;
   border: none;
@@ -764,15 +706,17 @@ label.label-yellow {
 
 /* お届け先（郵便番号と住所）の調整 */
 .vertical-inputs {
-  display: flex; /* Flexコンテナにする */
-  flex-direction: column; /* 要素を縦（上から下）に並べる */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* 子要素を横幅いっぱいに広げる */
+  flex-grow: 1;
 }
 .form-group #zip-code {
   width: 190px;
   margin-bottom: 28px;
 }
-.form-group #address {
-  width: 620px;
+#address {
+  width: 100%;
 }
 .form-group textarea {
   flex-grow: 1;
@@ -864,6 +808,7 @@ label.label-yellow {
     height: auto; /* コンテンツ量に合わせて伸びるように */
     min-height: 100vh;
     row-gap: 30px;
+    padding: 0 4%;
   }
 
   /* 2. 上にくるコンテンツの解除 */
@@ -896,26 +841,29 @@ label.label-yellow {
   .hero .btn-yellow {
     position: static;
     margin-top: 60px;
-    width: 80%;
-    max-width: 300px;
+    width: 100%;
     order: 4;
   }
 
   /* ===== セクション共通 ===== */
   /* section {
-    padding: 0 4%;
+    padding: 0 2%;
   } */
 
   .title-line {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
   }
 
   .curve {
-    width: calc(100% + 146px);
+    width: calc(100% + 4em);
   }
 
   .section-title {
     font-size: 2rem;
+  }
+
+  .btn-dark {
+    width: 92%;
   }
   /* ===== なぞスクとは ===== */
   .about-txt {
@@ -943,12 +891,141 @@ label.label-yellow {
     font-size: 1.6rem;
     top: -30px;
   }
-  .flow-steps {
+
+  /* ===== 利用者の声 ===== */
+  .voices .voice-box {
+    position: static;
+    width: 100%;
+    display: flex;
     flex-direction: column;
+    gap: 30px;
+  }
+  .voice-box.yellow {
+    border-radius: 58px 90px 0 95px;
+    padding: 60px 8%;
+    transform: translateX(4%);
+    margin-bottom: 60px;
   }
 
+  .voice-box.blue {
+    border-radius: 90px 70px 116px 0;
+    padding: 60px 8%;
+    transform: translateX(-4%);
+  }
+
+  .voice {
+    flex-direction: column;
+    gap: 30px;
+    font-size: 1.6rem;
+    text-align: justify;
+  }
+  .voice_01.voice,
+  .voice_02.voice {
+    transform: translateX(-4%);
+  }
+  .voice_03.voice,
+  .voice_04.voice {
+    transform: translateX(4%);
+  }
+
+  /* ===== ご利用の流れ ===== */
+  .flow-container {
+    width: 100%;
+    height: auto;
+    padding: 80px 4%;
+    border-radius: 150px 116px 0 225px;
+    transform: translateX(4%);
+  }
+
+  .flow-wrapper {
+    transform: translateX(-4%);
+  }
+  .img-flow {
+    display: none;
+  }
+  .img-steps {
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央に揃える */
+  }
+  .img-steps img {
+    width: 100%;
+    height: auto;
+  }
+  .blue_bg {
+    width: 100%;
+    transform: translateX(-4%);
+  }
+
+  /* ===== FAQ ===== */
+  .faq {
+    width: 100%;
+  }
+  .faq-contents {
+    width: 100%;
+    padding: 0 4%;
+    font-size: 1.6rem;
+    text-align: justify;
+  }
+
+  details summary {
+    font-weight: 400;
+    padding: 1em;
+  }
+
+  /* ===== フォーム ===== */
+  .form {
+    width: 100%;
+    padding: 0 4%;
+  }
   .plan-select {
     flex-direction: column;
+    gap: 20px;
+  }
+  .plan-select .tab-text {
+    width: 100%;
+    height: auto;
+    padding: 14px;
+    font-size: 1.6rem;
+  }
+  .form-group {
+    font-size: 1.4rem;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
+    margin-bottom: 40px;
+  }
+  .form-group label {
+    border-radius: 10px;
+    text-align: center;
+  }
+  /* 入力欄（input, textarea）共通スタイル */
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group textarea {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  /* 親要素を縦並びに変えて、中身を横幅いっぱいにする */
+  .form-group.flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* 入力欄の箱を横幅100%に広げる */
+  .vertical-inputs {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  /* 住所入力欄を横幅100%にする */
+  #address {
+    width: 100% !important;
+    border-radius: 10px;
+    margin-top: -15px;
+  }
+  .submit-button {
+    width: 100%;
   }
 }
