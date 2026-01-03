@@ -1,5 +1,4 @@
 :root {
-  --max-width: 1280px;
   --main-yellow: #f4f910;
   --dark-gray: #333;
   --white: #fff;
@@ -18,7 +17,7 @@ body {
   background: var(--white);
   font-weight: 400; /* レギュラーウェイトを指定 */
   font-size: 1.4rem; /* <p>に合わせて14px */
-  line-height: 1;
+  line-height: 1.6;
   margin: 0 auto;
   overflow-x: hidden;
 }
@@ -32,25 +31,76 @@ img {
 /* ===== ヘッダー ===== */
 header {
   width: 100%;
+  max-width: 100vw; /* 画面幅以上に広がらないように強制 */
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 30px;
-  background: var(--blue);
+  padding: 0 30px;
+  background: rgba(224, 233, 251, 0.85);
   position: fixed;
-  overflow: hidden;
-  z-index: 10;
-  opacity: 0.85;
+  top: 0;
+  left: 0;
+  right: 0; /* これを入れると幅が安定します */
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+/* ロゴの修正 */
+header .logo {
+  width: 50px;
+  flex-shrink: 0;
 }
 
 header .logo img {
-  width: 80%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ナビゲーションの修正 */
+header nav {
+  flex-shrink: 0; /* つぶれるのを防止 */
 }
 
 header nav ul {
   display: flex;
   gap: 20px;
   list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li {
+  white-space: nowrap; /* 改行させず、横一行を維持する */
+}
+
+.hamburger {
+  display: none; /* PCでは隠す */
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+  z-index: 100;
+}
+
+/* ハンバーガーの三本線 */
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #333;
+  position: absolute;
+  transition: all 0.3s;
+}
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+.hamburger span:nth-child(2) {
+  top: 11px;
+}
+.hamburger span:nth-child(3) {
+  bottom: 0;
 }
 
 header a {
@@ -58,6 +108,7 @@ header a {
   padding: 10px 0;
   position: relative;
   outline: none;
+  color: #333;
 }
 
 header a::after {
@@ -83,23 +134,23 @@ header a:hover::after {
 /* ===== ヒーロー ===== */
 .hero {
   position: relative;
-  height: 100vh;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  background-image: url('../img/mv.jpg');
+  background-image: url(/img/mv.jpg);
   opacity: 0.95;
-  /* (補足) 中のテキストを中央寄せにする場合 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.hero svg {
+svg.puzzle {
   display: block;
   position: absolute;
-  top: 58%;
+  top: 53%;
   transform: translateY(-50%);
   right: 16%;
   width: 100%;
@@ -134,27 +185,28 @@ header a:hover::after {
 .hero-content {
   position: absolute;
   z-index: 2;
-  top: 66%;
+  /* top: 66%; */
   left: 76%;
   transform: translate(-50%, -50%);
   text-align: center;
-}
-
-.hero-content h1 {
-  margin-bottom: 20px;
+  /* overflow: hidden; */
 }
 
 .hero .btn-yellow {
+  position: absolute;
+  right: 12%; /* 右端からの距離（お好みで調整） */
+  bottom: 50px;
   width: 300px;
   font-size: 2rem;
   display: block;
+  text-align: center;
   background: var(--main-yellow);
   padding: 12px;
   border-radius: var(--radius);
   text-decoration: none;
-  margin-top: 150px;
-  box-shadow: 0 4px 0 rgb(30, 30, 30); /* Y方向に4px、ぼかしなし、広がりなし */
-  border: 1px solid rgb(30, 30, 30);
+  /* margin-top: 150px; */
+  box-shadow: 0 4px 0 rgb(224, 233, 251); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: 1px solid rgb(224, 233, 251);
   cursor: pointer;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* (↓推奨) 押したときの立体感を出すための設定 */
 }
@@ -163,11 +215,12 @@ header a:hover::after {
   /* ボタン自体を影の分だけ下に動かす (4px分) */
   transform: translateY(4px);
   /* 影を消すことで、「ボタンが沈んだ」ように見せます */
-  box-shadow: 0 0 0 rgba(30, 30, 30, 0);
+  box-shadow: 0 0 0 rgba(224, 233, 251);
 }
 
-.hero .plane {
-  width: 100%;
+svg.plane {
+  width: 6%;
+  height: auto;
   display: block;
   position: absolute;
   top: 58%;
@@ -192,7 +245,7 @@ header a:hover::after {
 
 /* ===== セクション共通 ===== */
 section {
-  margin: 120px auto 0;
+  margin: 100px auto;
   text-align: center;
 }
 .has-line {
@@ -238,6 +291,17 @@ h2 img {
   box-shadow: 0 0 0 rgb(244, 249, 16);
 }
 
+.blue_bg {
+  box-shadow: 0 4px 0 rgb(224, 233, 251); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: 1px solid rgb(224, 233, 251);
+}
+
+.blue_bg:active {
+  /* ボタン自体を影の分だけ下に動かす (4px分) */
+  transform: translateY(4px);
+  /* 影を消すことで、「ボタンが沈んだ」ように見せます */
+  box-shadow: 0 0 0 rgb(224, 233, 251);
+}
 /* ====== タイトル背面の曲線 SVG を配置してアニメ ====== */
 .title-line {
   position: relative;
@@ -277,7 +341,7 @@ h2 img {
 }
 /* ===== 料金プラン ===== */
 .plans {
-  max-width: var(--max-width);
+  max-width: 1280px;
   margin: 100px auto 0;
   display: flex;
   flex-direction: column;
@@ -287,7 +351,6 @@ h2 img {
   background-color: var(--blue);
   border-radius: 144px 178px 285px 0;
   padding: 118px 45px 37px 190px;
-  margin-right: 145px;
 }
 /* 3つのプランを囲むラッパーと横並びの設定 */
 .plans-wrapper {
@@ -324,7 +387,7 @@ h2 img {
 /* ヘッダー内のプラン名 */
 .plan-header h4 {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: 2rem;
 }
 
 /* おすすめ！タグのスタイル */
@@ -343,7 +406,7 @@ h2 img {
 }
 
 /* ボディ部分（白い部分） */
-.plan-body {
+.plan-content {
   padding: 32px 9px 65px;
   background-color: var(--white);
   height: 100%; /* 全体の高さを合わせるため */
@@ -405,28 +468,6 @@ h2 img {
   margin-top: 15px;
 }
 
-/* レスポンシブ対応 (画面幅が狭い場合、縦並びにする) */
-@media (max-width: 768px) {
-  .plans-wrapper {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .plan-card {
-    margin-bottom: 20px;
-    min-width: unset;
-  }
-
-  .recommend-tag {
-    top: -30px; /* 縦並びになったので、少し位置を調整 */
-  }
-
-  .notes {
-    padding-left: 0;
-    text-align: center;
-  }
-}
-
 /* ===== 利用者の声 ===== */
 .voices .voice-box {
   position: relative;
@@ -461,20 +502,21 @@ h2 img {
   flex-direction: row-reverse;
 }
 .voice-sec {
-  margin-top: 32px;
+  margin-top: -58px;
 }
 /* ===== ご利用の流れ ===== */
 .flow {
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 .y-bubble {
-  width: 1163px;
+  width: 100%;
   height: 1532px;
   padding: 100px 0;
-  margin-left: 117px;
   background: var(--main-yellow);
   border-radius: 299px 232px 0 476px;
+  transform: translateX(117px);
 }
 .flow-wrapper {
   width: 100%;
@@ -484,11 +526,11 @@ h2 img {
   transform: translateX(-50%);
   text-align: center;
 }
-.flow-contents {
+/* .flow-contents {
   width: 100%;
   position: relative;
-}
-.flow-frame {
+} */
+/* .flow-frame {
   margin-top: 20px;
 }
 .step {
@@ -544,7 +586,7 @@ h2 img {
   max-width: 210px;
   line-height: 2;
   margin: 16px auto 0;
-}
+} */
 /* ===== FAQ ===== */
 .faq-contents {
   display: flex;
@@ -608,75 +650,305 @@ details[open] p {
 }
 /* ===== フォーム ===== */
 .form {
-  background-image: url(/img/mv.jpg);
-  opacity: 0.85;
+  position: relative;
   color: var(--white);
-  /* padding: 80px 20px; */
+  margin-bottom: 0;
+}
+.form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(/img/mv.jpg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  z-index: -1;
+}
+
+.form h2 {
+  margin-top: 100px;
 }
 .form form {
-  max-width: 600px;
+  max-width: 766px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 28px;
+  text-align: left;
+}
+
+legend {
+  font-size: 2.4rem;
+  margin-bottom: 32px;
 }
 .plan-select {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 100px;
+  text-align: center;
+}
+/* ラジオボタンを非表示にする */
+.plan-select input[type="radio"] {
+  display: none;
 }
 .plan-select label {
+  display: block; /* labelをブロック要素に */
+  /* ラジオボタンのクリック領域を広げる */
+}
+.plan-select .tab-text {
+  /* 既存のタブのスタイル（枠線、padding、背景色など）をここに設定 */
+  display: block; /* <span>をブロック要素のように扱う */
   background: var(--white);
   color: var(--dark-gray);
-  padding: 10px 15px;
-  border-radius: var(--radius);
-}
-input,
-textarea {
-  padding: 10px;
-  border-radius: var(--radius);
-  border: none;
-  width: 100%;
-}
-textarea {
-  height: 100px;
-}
-/* .btn-yellow {
-  background: var(--main-yellow);
-  border: none;
-  color: var(--dark-gray);
-  padding: 12px 80px;
-  border-radius: var(--radius);
+  padding: 26px;
+  border-radius: 20px 20px 0 0;
+  width: 240px;
+  height: 86px;
   cursor: pointer;
-} */
+  transition: all 0.3s;
+  font-size: 2rem;
+  line-height: 1.8;
+  font-weight: 700;
+}
+/* チェックされたラジオボタンの直後にある <span> にスタイルを適用 */
+.plan-select input[type="radio"]:checked + .tab-text {
+  background-color: #f4f910;
+}
+/* 1行のグループ（ラベルと入力欄） */
+.form-group {
+  font-size: 1.6rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center; /* 垂直方向の中央揃え */
+  margin-bottom: 28px;
+}
 
+.flex {
+  align-items: flex-start;
+}
+/* ラベル共通スタイル */
+.form-group label {
+  color: #333;
+  padding: 10px;
+  border-radius: 10px 0 0 10px;
+  margin-right: 13px;
+  text-align: right;
+  /* ラベルの幅を固定して、入力欄との境界を揃える */
+  width: 133px;
+  flex-shrink: 0; /* 幅を固定し縮まないようにする */
+  background-color: #fff;
+}
+
+/* ★黄色い背景のラベル（お名前、お届け先など）★ */
+label.label-yellow {
+  background-color: #f4f910; /* 画像のような明るい黄色 */
+}
+
+/* 入力欄（input, textarea）共通スタイル */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="text"][placeholder="〒"],
+.form-group textarea,
+.form-group #address {
+  flex-grow: 1; /* 残りのスペースいっぱいに広がる */
+  padding: 10px;
+  border: none;
+  border-radius: 0 10px 10px 0;
+  height: 40px; /* 入力欄の高さを揃える */
+  background-color: #fff;
+}
+
+/* お届け先（郵便番号と住所）の調整 */
+.vertical-inputs {
+  display: flex; /* Flexコンテナにする */
+  flex-direction: column; /* 要素を縦（上から下）に並べる */
+}
+.form-group #zip-code {
+  width: 190px;
+  margin-bottom: 28px;
+}
+.form-group #address {
+  width: 620px;
+}
+.form-group textarea {
+  flex-grow: 1;
+  height: 120px; /* 高さを出す */
+  padding: 10px;
+  border: none;
+  border-radius: 0 10px 10px 0;
+}
+
+.submit-button {
+  display: block;
+  background: var(--main-yellow);
+  color: var(--dark-gray);
+  text-align: center;
+  padding: 24px;
+  border-radius: var(--radius);
+  width: 600px;
+  margin: 90px auto 100px;
+  text-decoration: none;
+  font-size: 2.4rem;
+  box-shadow: 0 4px 0 rgb(224, 233, 251); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: 1px solid rgb(224, 233, 251);
+  cursor: pointer;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.submit-button:active {
+  /* ボタン自体を影の分だけ下に動かす (4px分) */
+  transform: translateY(4px);
+  /* 影を消すことで、「ボタンが沈んだ」ように見せます */
+  box-shadow: 0 0 0 rgba(224, 233, 251);
+}
 /* ===== フッター ===== */
 .footer {
-  background: #222;
-  color: #aaa;
+  background: var(--blue);
+  color: var(--dark-gray);
   text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
+  padding: 42px;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer img {
+  display: block;
+  margin-right: 30px;
 }
 
 /* ===== レスポンシブ ===== */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    text-align: center;
+@media screen and (max-width: 768px) {
+  /* ===== ヘッダー ===== */
+  .hamburger {
+    display: block; /* ボタンを表示 */
   }
-  .plan-cards {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%; /* 最初は画面の外に隠す */
+    width: 80%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    flex-direction: column; /* 縦並び */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s;
+    z-index: 90;
+  }
+  /* メニューが開いた時の状態 */
+  .nav-links.is-active {
+    right: 0;
+  }
+  /* ボタンが×に変化するアニメーション */
+  .hamburger.is-active span:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+  }
+  .hamburger.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.is-active span:nth-child(3) {
+    transform: translateY(-12px) rotate(-45deg);
+  }
+
+  /* ===== ヒーロー ===== */
+  .hero {
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center;
+    align-items: center;
+    height: auto; /* コンテンツ量に合わせて伸びるように */
+    min-height: 100vh;
+    row-gap: 30px;
+  }
+
+  /* 2. 上にくるコンテンツの解除 */
+  .hero-content {
+    position: static; /* absolute解除 */
+    transform: none; /* 位置調整解除 */
+    order: 1; /* 1番目に配置 */
+    margin-bottom: 40px; /* パズルとの間隔 */
+    width: 90%; /* 横幅調整 */
+  }
+
+  /* 3. 下にくるパズルの解除 */
+  svg.puzzle {
+    position: static; /* absolute解除 */
+    transform: none; /* 位置調整解除 */
+    order: 3;
+    margin: 0 auto;
+    transform: translateX(-15%);
+  }
+
+  /* 4. 飛行機のアイコン（位置を微調整） */
+  svg.plane {
+    position: absolute; /* これは浮かせておいた方が可愛いので維持 */
+    top: auto;
+    order: 2;
+    width: 8%;
+  }
+
+  /* ボタンの余白が大きすぎる場合の調整 */
+  .hero .btn-yellow {
+    position: static;
+    margin-top: 60px;
+    width: 80%;
+    max-width: 300px;
+    order: 4;
+  }
+
+  /* ===== セクション共通 ===== */
+  /* section {
+    padding: 0 4%;
+  } */
+
+  .title-line {
+    font-size: 2.8rem;
+  }
+
+  .curve {
+    width: calc(100% + 146px);
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+  /* ===== なぞスクとは ===== */
+  .about-txt {
+    text-align: justify;
+    padding: 0 4%;
+  }
+
+  /* ===== 料金プラン ===== */
+  .plans-container {
+    width: 100%;
+    border-radius: 72px 89px 142px 0;
+    padding: 60px 4%;
+  }
+
+  .plans-wrapper {
+    column-gap: 30px;
     flex-direction: column;
+  }
+  .plan-card {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .recommend-tag {
+    font-size: 1.6rem;
+    top: -30px;
   }
   .flow-steps {
     flex-direction: column;
   }
+
   .plan-select {
     flex-direction: column;
     gap: 10px;
   }
 }
-
-
-
-
-
