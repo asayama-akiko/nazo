@@ -1,0 +1,682 @@
+:root {
+  --max-width: 1280px;
+  --main-yellow: #f4f910;
+  --dark-gray: #333;
+  --white: #fff;
+  --blue: #e0e9fb;
+  --radius: 15px;
+}
+
+html {
+  font-size: 62.5%; /* 10px */
+}
+
+body {
+  width: 100%;
+  font-family: "Roboto Mono", "Noto Sans JP", sans-serif;
+  color: var(--dark-gray);
+  background: var(--white);
+  font-weight: 400; /* レギュラーウェイトを指定 */
+  font-size: 1.4rem; /* <p>に合わせて14px */
+  line-height: 1;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+/* ===== ヘッダー ===== */
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 30px;
+  background: var(--blue);
+  position: fixed;
+  overflow: hidden;
+  z-index: 10;
+  opacity: 0.85;
+}
+
+header .logo img {
+  width: 80%;
+}
+
+header nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+header a {
+  text-decoration: none;
+  padding: 10px 0;
+  position: relative;
+  outline: none;
+}
+
+header a::after {
+  content: "";
+  position: absolute;
+  background: var(--main-yellow);
+  height: 2px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  transform-origin: center;
+  /* ホバー前の状態: 横幅を0%に縮小して隠す */
+  transform: scaleX(0);
+  /* アニメーションの設定 (0.3秒で「シュッ」と変化) */
+  transition: transform 0.3s ease-out;
+}
+
+header a:hover::after {
+  /* ホバー時: 横幅を100%に戻す */
+  transform: scaleX(1);
+}
+
+/* ===== ヒーロー ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url('../img/mv.jpg');
+  opacity: 0.95;
+  /* (補足) 中のテキストを中央寄せにする場合 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero svg {
+  display: block;
+  position: absolute;
+  top: 58%;
+  transform: translateY(-50%);
+  right: 16%;
+  width: 100%;
+  z-index: 1;
+}
+
+.draw {
+  fill: none;
+  stroke: #ffffff; /* 線色 */
+  stroke-width: 2; /* 太さ */
+  stroke-linecap: round; /* 先端丸め */
+  stroke-dasharray: 1; /* 全長=1（pathLength参照） */
+  stroke-dashoffset: 1; /* 全部隠す */
+  animation: draw 4s ease-in-out forwards;
+  /* ほんのり発光したい場合（任意） */
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.35));
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  } /* 1 → 0 で全体が現れる */
+}
+
+/* 動きを弱めたい環境向け（任意） */
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    animation-duration: 8s;
+  }
+}
+
+.hero-content {
+  position: absolute;
+  z-index: 2;
+  top: 66%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hero-content h1 {
+  margin-bottom: 20px;
+}
+
+.hero .btn-yellow {
+  width: 300px;
+  font-size: 2rem;
+  display: block;
+  background: var(--main-yellow);
+  padding: 12px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-top: 150px;
+  box-shadow: 0 4px 0 rgb(30, 30, 30); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: 1px solid rgb(30, 30, 30);
+  cursor: pointer;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* (↓推奨) 押したときの立体感を出すための設定 */
+}
+
+.hero .btn-yellow:active {
+  /* ボタン自体を影の分だけ下に動かす (4px分) */
+  transform: translateY(4px);
+  /* 影を消すことで、「ボタンが沈んだ」ように見せます */
+  box-shadow: 0 0 0 rgba(30, 30, 30, 0);
+}
+
+.hero .plane {
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 58%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes flyIn {
+  0% {
+    opacity: 0; /* 透明で表示 */
+    transform: translate(-30px, 20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+.hero #paper-plane {
+  animation: flyIn 1.5s cubic-bezier(0.23, 1, 0.32, 1) 4s both;
+}
+
+/* ===== セクション共通 ===== */
+section {
+  margin: 120px auto 0;
+  text-align: center;
+}
+.has-line {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 0 auto 66px;
+}
+
+h2 img {
+  display: block;
+  margin: 0 auto 22.94px;
+}
+
+.section-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 42px;
+}
+
+.btn-dark {
+  display: block;
+  background: var(--dark-gray);
+  color: var(--white);
+  text-align: center;
+  padding: 24px;
+  border-radius: var(--radius);
+  width: 600px;
+  margin: 90px auto 0;
+  text-decoration: none;
+  font-size: 2.4rem;
+  box-shadow: 0 4px 0 rgb(244, 249, 16); /* Y方向に4px、ぼかしなし、広がりなし */
+  border: 1px solid rgb(244, 249, 16);
+  cursor: pointer;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.btn-dark:active {
+  /* ボタン自体を影の分だけ下に動かす (4px分) */
+  transform: translateY(4px);
+  /* 影を消すことで、「ボタンが沈んだ」ように見せます */
+  box-shadow: 0 0 0 rgb(244, 249, 16);
+}
+
+/* ====== タイトル背面の曲線 SVG を配置してアニメ ====== */
+.title-line {
+  position: relative;
+  z-index: 2;
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+
+/* 線の基本配置 */
+.curve {
+  position: absolute;
+  left: 50%;
+  top: 60%; /* 調整可 */
+  transform: translateX(-50%);
+  width: calc(100% + 168px);
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.y-path {
+  fill: none;
+  stroke: var(--main-yellow);
+}
+
+.w-path {
+  fill: none;
+  stroke: var(--white);
+}
+.about-txt {
+  width: 100%;
+  max-width: 720px;
+  text-align: left;
+  margin: 0 auto;
+  font-size: 1.6rem;
+  line-height: 2.25;
+}
+/* ===== 料金プラン ===== */
+.plans {
+  max-width: var(--max-width);
+  margin: 100px auto 0;
+  display: flex;
+  flex-direction: column;
+}
+.plans-container {
+  max-width: 1135px;
+  background-color: var(--blue);
+  border-radius: 144px 178px 285px 0;
+  padding: 118px 45px 37px 190px;
+  margin-right: 145px;
+}
+/* 3つのプランを囲むラッパーと横並びの設定 */
+.plans-wrapper {
+  display: flex;
+  gap: 30px; /* プラン間のスペース */
+  margin-bottom: 30px;
+  position: relative;
+}
+
+/* プランカード全体の共通スタイル */
+.plan-card {
+  width: 280px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 0 0 20px 20px;
+}
+
+/* ヘッダー部分（色分けされる部分） */
+.plan-header {
+  padding: 28px;
+  color: var(--white);
+  background-color: var(--dark-gray);
+  font-weight: 700;
+  position: relative;
+  border-radius: 20px 20px 0 0;
+}
+
+/* ライトプランのヘッダー色 */
+.plan-header.light {
+  background-color: var(--main-yellow);
+  color: var(--dark-gray);
+}
+
+/* ヘッダー内のプラン名 */
+.plan-header h4 {
+  margin: 0;
+  font-size: 2.4rem;
+}
+
+/* おすすめ！タグのスタイル */
+.recommend-tag {
+  position: absolute;
+  top: -48px; /* ヘッダーの上部外側に配置 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.4rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--dark-gray);
+  /* 画像の「おすすめ！」を囲む記号の再現 */
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* ボディ部分（白い部分） */
+.plan-body {
+  padding: 32px 9px 65px;
+  background-color: var(--white);
+  height: 100%; /* 全体の高さを合わせるため */
+  font-weight: 300;
+}
+
+/* 月額のラベル */
+.price-label {
+  font-size: 2rem;
+  margin-bottom: 18px;
+  padding: 0 36px;
+  text-align: left;
+}
+
+/* 価格の数字 */
+.price {
+  font-family: "Roboto + Mono";
+  font-size: 6.4rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 33px;
+  line-height: 1;
+}
+
+/* 円マーク */
+.yen {
+  font-size: 3.6rem;
+  font-weight: 300;
+  vertical-align: bottom;
+}
+
+/* 破線の区切り線 */
+.divider {
+  border: none;
+  border-top: 1px dashed var(--dark-gray); /* 破線 */
+  margin-bottom: 66px;
+}
+
+/* 特典の説明テキスト */
+.feature {
+  font-size: 2rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.last-feature {
+  margin-top: -17.5px;
+}
+/* 注意書きのスタイル */
+.notes {
+  font-size: 1.4rem;
+  font-weight: 200;
+  color: #7a7878;
+  text-align: left;
+  margin-top: 11px;
+}
+
+.notes p {
+  margin-top: 15px;
+}
+
+/* レスポンシブ対応 (画面幅が狭い場合、縦並びにする) */
+@media (max-width: 768px) {
+  .plans-wrapper {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .plan-card {
+    margin-bottom: 20px;
+    min-width: unset;
+  }
+
+  .recommend-tag {
+    top: -30px; /* 縦並びになったので、少し位置を調整 */
+  }
+
+  .notes {
+    padding-left: 0;
+    text-align: center;
+  }
+}
+
+/* ===== 利用者の声 ===== */
+.voices .voice-box {
+  position: relative;
+  max-width: 844px;
+  margin: 0 auto;
+}
+.voice-box.yellow {
+  border-radius: 116px 180px 0 190px;
+  background: var(--main-yellow);
+  padding: 54px 98px;
+  top: 0;
+  left: 36px;
+  z-index: 2;
+}
+.voice-box.blue {
+  border-radius: 180px 139px 233px 0;
+  background: var(--blue);
+  padding: 90px 96px 54px;
+  top: -58px;
+  left: -36px;
+  z-index: 1;
+}
+.voice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  font-size: 2rem;
+  line-height: 1.5;
+}
+.revers {
+  flex-direction: row-reverse;
+}
+.voice-sec {
+  margin-top: 32px;
+}
+/* ===== ご利用の流れ ===== */
+.flow {
+  width: 100%;
+  position: relative;
+}
+.y-bubble {
+  width: 1163px;
+  height: 1532px;
+  padding: 100px 0;
+  margin-left: 117px;
+  background: var(--main-yellow);
+  border-radius: 299px 232px 0 476px;
+}
+.flow-wrapper {
+  width: 100%;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.flow-contents {
+  width: 100%;
+  position: relative;
+}
+.flow-frame {
+  margin-top: 20px;
+}
+.step {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px 54px;
+  text-align: justify;
+}
+.step_01 {
+  position: absolute;
+  top: 118px;
+  left: 209px;
+}
+.step_02 {
+  position: absolute;
+  top: 272px;
+  left: 705px;
+}
+.step_03 {
+  position: absolute;
+  top: 635px;
+  left: 431px;
+}
+.step-number {
+  font-size: 3.6rem;
+  position: relative;
+}
+
+.step-number::after {
+  content: "";
+  background: var(--white);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  left: 3px;
+  z-index: -1;
+}
+
+.step-content {
+  margin-top: 73px;
+}
+.step-title {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.step-txt {
+  display: block;
+  max-width: 210px;
+  line-height: 2;
+  margin: 16px auto 0;
+}
+/* ===== FAQ ===== */
+.faq-contents {
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  font-size: 2rem;
+  line-height: 1.3;
+  margin: 0 auto;
+  padding: 0 50px;
+  gap: 34px;
+}
+
+details {
+  background-color: var(--blue);
+  border-radius: 5px;
+}
+
+details summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 1em 2em;
+  color: #333333;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::after {
+  transform: translateY(-25%) rotate(45deg);
+  width: 7px;
+  height: 7px;
+  margin-left: 10px;
+  border-bottom: 3px solid #c2c2c2;
+  border-right: 3px solid #c2c2c2;
+  content: "";
+  transition: transform 0.3s;
+}
+
+details[open] summary::after {
+  transform: rotate(225deg);
+}
+
+details p {
+  transform: translateY(-10px);
+  opacity: 0;
+  margin: 0;
+  padding: 0.3em 2em 1.5em;
+  color: #333333;
+  transition: transform 0.5s, opacity 0.5s;
+  text-align: left;
+}
+
+details[open] p {
+  transform: none;
+  opacity: 1;
+}
+/* ===== フォーム ===== */
+.form {
+  background-image: url(/img/mv.jpg);
+  opacity: 0.85;
+  color: var(--white);
+  /* padding: 80px 20px; */
+}
+.form form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.plan-select {
+  display: flex;
+  justify-content: space-between;
+}
+.plan-select label {
+  background: var(--white);
+  color: var(--dark-gray);
+  padding: 10px 15px;
+  border-radius: var(--radius);
+}
+input,
+textarea {
+  padding: 10px;
+  border-radius: var(--radius);
+  border: none;
+  width: 100%;
+}
+textarea {
+  height: 100px;
+}
+/* .btn-yellow {
+  background: var(--main-yellow);
+  border: none;
+  color: var(--dark-gray);
+  padding: 12px 80px;
+  border-radius: var(--radius);
+  cursor: pointer;
+} */
+
+/* ===== フッター ===== */
+.footer {
+  background: #222;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .plan-cards {
+    flex-direction: column;
+  }
+  .flow-steps {
+    flex-direction: column;
+  }
+  .plan-select {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+
+
+
+
